@@ -14,7 +14,7 @@
 	<name>apiptow</name>
 	<description>A simple API to save peoples and ocupations.</description>
 	<properties>
-		<java.version>11</java.version>
+		
 	</properties>
 	<dependencies>
 		<dependency>
