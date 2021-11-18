@@ -17,6 +17,7 @@ public class SkillDTO {
 
 	private String name;
 	private Double salary;
+	
     private List<PersonDTO> peoples;
 	
 	

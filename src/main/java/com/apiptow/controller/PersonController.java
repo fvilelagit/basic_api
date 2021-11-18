@@ -1,5 +1,9 @@
 package com.apiptow.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,26 +28,37 @@ public class PersonController {
 	
 	@Autowired
 	private PersonService service;
+	@Autowired
+	private final PersonMapper personMapper = PersonMapper.INSTANCE;
+	
 	
 	@PostMapping
-	public ResponseEntity <Response<PersonDTO>> insertJogador(@Valid @RequestBody PersonDTO dto, BindingResult r){
+	public ResponseEntity <Response<PersonDTO>> insert(@RequestBody PersonDTO dto){
 		
 		Response <PersonDTO> response = new Response<PersonDTO>();
 		
-		if (r.hasErrors()) {
-			r.getAllErrors().forEach(e -> response.getErrors().add(e.getDefaultMessage()));
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-		}	
-		
-		Person j = service.save(PersonMapper.toModel(dto));
-		response.setData(PersonMapper.toDTO(j));
+		Person j = service.save(personMapper.toModel(dto));
+		response.setData(personMapper.toDTO(j));
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 		
-	}
+	}	
 	
 	@GetMapping
-	public String getBook() {
-		return "API TEST"; 
+	public ResponseEntity<List<Response<PersonDTO>>> findAll(@RequestBody PersonDTO dto){
+		List <Response<PersonDTO>> response = new ArrayList();
+		
+		List<PersonDTO> dtoList = service.findAll()
+				.stream()
+				.map(personMapper::toDTO)
+				.collect(Collectors.toList());
+		for (PersonDTO jdto : dtoList) {
+			Response<PersonDTO> d1 = new Response<PersonDTO>();
+			d1.setData(jdto);
+			response.add(d1);
+		}
+		
+		return ResponseEntity.ok().body(response);
+		
 	}
 	
 	

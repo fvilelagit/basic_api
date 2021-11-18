@@ -13,13 +13,7 @@ public interface PersonMapper {
     PersonMapper INSTANCE = Mappers.getMapper(PersonMapper.class);
 
     @Mapping(target = "cargo", source = "cargo")
-	static Person toModel(PersonDTO personDTO) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	Person toModel(PersonDTO personDTO);
 
-    static PersonDTO toDTO(Person person) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    PersonDTO toDTO(Person person);
 }
