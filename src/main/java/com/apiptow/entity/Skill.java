@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+
 public class Skill {
 
 	@Id
@@ -25,10 +25,18 @@ public class Skill {
 
 	private String name;
 
-	private BigDecimal salary;
+	private Double salary;
 	
     @OneToMany(mappedBy = "cargo")
     private List<Person> peoples;
+
+	public Skill(Long id, String name, Double salary, List<Person> peoples) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.salary = salary;
+		this.peoples = peoples;
+	}
 	
 	
 
